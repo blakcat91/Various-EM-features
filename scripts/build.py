@@ -75,6 +75,11 @@ import shutil
 import binascii
 import textwrap
 
+'''Handle running the script from any directory'''
+cwd=os.getcwd();
+os.chdir(os.path.dirname(os.path.abspath(__file__)));
+os.chdir("..");
+
 PathVar = os.environ.get('Path')
 Paths = PathVar.split(';')
 PATH = ""
@@ -634,3 +639,7 @@ def main():
 	
 if __name__ == '__main__':
 	main()
+
+'''Reset the current working directory to the original'''
+if cwd!=os.getcwd():
+	os.chdir(cwd);
