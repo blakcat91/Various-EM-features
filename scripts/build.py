@@ -75,16 +75,18 @@ import shutil
 import binascii
 import textwrap
 
-PathVar = os.environ.get('Path')
-Paths = PathVar.split(';')
+windows=sys.platform.startswith('win');
+PathVar = os.environ.get('Path' if windows else 'PATH')
 PATH = ""
-for candidatePath in Paths:
-    if "devkitARM" in candidatePath:
-        PATH = candidatePath
-        break
+if PathVar is not None:
+	Paths = PathVar.split(';' if windows else ':')
+	for candidatePath in Paths:
+		if "devkitARM" in candidatePath:
+			PATH = candidatePath
+			break
 if PATH == "":
 	print('DevKit does not exist in your Path variable.\nChecking default location.')
-	PATH = 'C://devkitPro//devkitARM//bin'
+	PATH = 'C://devkitPro//devkitARM//bin'	#put your devkitARM directory here if python couldn't find it
 	if os.path.isdir(PATH) == False:
 		print("...\nDevkit not found.")
 		sys.exit(1)
